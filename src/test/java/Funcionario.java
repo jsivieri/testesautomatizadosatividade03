@@ -4,16 +4,9 @@ public class Funcionario {
     private double valorHora;
 
     public Funcionario(String nome, int horasTrabalhadas, double valorHora) {
-        if (horasTrabalhadas < 20 || horasTrabalhadas > 40) {
-            throw new IllegalArgumentException("Carga horária deve estar entre 20 e 40 horas.");
-        }
-        if (valorHora < 60.72 || valorHora > 151.80) {
-            throw new IllegalArgumentException("Valor por hora deve estar entre 4% e 10% do salário mínimo (R$1518.00).");
-        }
-
         this.nome = nome;
-        this.horasTrabalhadas = horasTrabalhadas;
-        this.valorHora = valorHora;
+        this.horasTrabalhadas = validarHorasTrabalhadas(horasTrabalhadas);
+        this.valorHora = validarValorHora(valorHora);
     }
 
     public double calcularPagamento() {
@@ -28,6 +21,28 @@ public class Funcionario {
         }
 
         return pagamento;
+    }
+
+    private int validarHorasTrabalhadas(int horas) {
+        if (horas < 20 || horas > 40) {
+            throw new IllegalArgumentException("Carga horária deve estar entre 20 e 40 horas.");
+        }
+        return horas;
+    }
+
+    private double validarValorHora(double valor) {
+        if (valor < 60.72 || valor > 151.80) {
+            throw new IllegalArgumentException("Valor por hora deve estar entre 4% e 10% do salário mínimo (R$1518.00).");
+        }
+        return valor;
+    }
+
+    public void setHorasTrabalhadas(int horasTrabalhadas) {
+        this.horasTrabalhadas = validarHorasTrabalhadas(horasTrabalhadas);
+    }
+
+    public void setValorHora(double valorHora) {
+        this.valorHora = validarValorHora(valorHora);
     }
 
     public String getNome() {
